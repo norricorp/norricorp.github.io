@@ -1,4 +1,8 @@
 <script>
+  import FilterButton from './FilterButton.svelte'
+  import Todo from './Todo.svelte'
+
+
     export let todos = []
     let newTodoName = ''
   
@@ -18,6 +22,7 @@
       todos = todos.filter(t => t.id !== todo.id)
     }
 
+
     function addTodo() {
       // doing this can cause problems as the array is mutated
       //todos.push({ id: newTodoId, name: newTodoName, completed: false })
@@ -28,11 +33,29 @@
       newTodoName = ''
     }
 
+    function updateTodo(todo) {
+      const i = todos.findIndex(t => t.id === todo.id)
+      todos[i] = { ...todos[i], ...todo }
+    }
+
     let filter = 'all'
       const filterTodos = (filter, todos) =>
         filter === 'active' ? todos.filter(t => !t.completed) :
         filter === 'completed' ? todos.filter(t => t.completed) :
         todos
+
+
+    function removeCompletedTodos() {
+      todos = todos.filter(t => t.completed == false)
+    }
+
+    function checkAll() {
+      todos.forEach(function(item, index) {
+        item.completed = true
+//        console.log(item.name, item.completed, index)
+      })
+      todos = [...todos]
+    }
 
   //  $: console.log('newTodoName: ', newTodoName)
 </script>
@@ -57,23 +80,7 @@
     </form>
   
     <!-- Filter -->
-    <div class="filters btn-group stack-exception">
-      <button class="btn toggle-btn" class:btn__primary={filter === 'all'} aria-pressed={filter === 'all'} on:click={()=> filter = 'all'} >
-        <span class="visually-hidden">Show</span>
-        <span>All</span>
-        <span class="visually-hidden">tasks</span>
-      </button>
-      <button class="btn toggle-btn" class:btn__primary={filter === 'active'} aria-pressed={filter === 'active'} on:click={()=> filter = 'active'} >
-        <span class="visually-hidden">Show</span>
-        <span>Active</span>
-        <span class="visually-hidden">tasks</span>
-      </button>
-      <button class="btn toggle-btn" class:btn__primary={filter === 'completed'} aria-pressed={filter === 'completed'} on:click={()=> filter = 'completed'} >
-        <span class="visually-hidden">Show</span>
-        <span>Completed</span>
-        <span class="visually-hidden">tasks</span>
-      </button>
-    </div>
+    <FilterButton bind:filter={filter}  />
   
     <!-- TodosStatus -->
     <h2 id="list-heading">{completedTodos} out of {totalTodos} items completed</h2>
@@ -82,22 +89,7 @@
     <ul role="list" class="todo-list stack-large" aria-labelledby="list-heading">
       {#each filterTodos(filter, todos) as todo (todo.id)}
         <li class="todo">
-          <div class="stack-small">
-            <div class="c-cb">
-              <input type="checkbox" id="todo-{todo.id}" on:click={() => todo.completed = !todo.completed} checked={todo.completed}/>
-              <label for="todo-{todo.id}" class="todo-label">
-                {todo.name}
-              </label>
-            </div>
-            <div class="btn-group">
-              <button type="button" class="btn">
-                Edit <span class="visually-hidden">{todo.name}</span>
-              </button>
-              <button type="button" class="btn btn__danger" on:click={() => removeTodo(todo)}>
-                Delete <span class="visually-hidden">{todo.name}</span>
-              </button>
-            </div>
-          </div>
+          <Todo todo={todo} on:update={e => updateTodo(e.detail)} on:remove={e => removeTodo(e.detail)} />
         </li>
       {:else}
         <li>Nothing to do here!</li>
@@ -108,8 +100,8 @@
   
     <!-- MoreActions -->
     <div class="btn-group">
-      <button type="button" class="btn btn__primary">Check all</button>
-      <button type="button" class="btn btn__primary">Remove completed</button>
+      <button type="button" class="btn btn__primary" on:click={() => checkAll()}>Check all</button>
+      <button type="button" class="btn btn__primary" on:click={() => removeCompletedTodos()}>Remove completed</button>
     </div>
   
   </div>
