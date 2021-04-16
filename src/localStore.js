@@ -5,6 +5,8 @@ export const localStore = (key, initial) => {                 // receives the ke
   const toString = (value) => JSON.stringify(value, null, 2)  // helper function
   const toObj = JSON.parse                                    // helper function
 
+ // localStorage.clear()
+
   if (localStorage.getItem(key) === null) {                   // item not present in local storage
     localStorage.setItem(key, toString(initial))              // initialize local storage with initial value
   }
