@@ -1,11 +1,12 @@
-  <script>
+  <script lang='ts'>
     import { createEventDispatcher } from 'svelte'
   //  import { tick } from 'svelte'
-    import { selectOnFocus, focusOnInit } from '../actions.js'
+    import { selectOnFocus, focusOnInit } from '../actions'
+    import type { TodoType } from '../types/todo.type'
  
 
     const dispatch = createEventDispatcher()
-    export let todo
+    export let todo: TodoType
 
     let editing = false                     // track editing mode
     let name = todo.name                    // hold the name of the todo being edited
@@ -13,7 +14,7 @@
 
 //    let nameEl                              // reference to the name input DOM node
 
-    function update(updatedTodo) {
+    function update(updatedTodo: Partial<TodoType>) {
         todo = { ...todo, ...updatedTodo }    // applies modifications to todo
         dispatch('update', todo)              // emit update event
     }
@@ -43,7 +44,7 @@
         update({ completed: !todo.completed}) // updates todo status
     }
 
-    const focusEditButton = (node) => editButtonPressed && node.focus()
+    const focusEditButton = (node: HTMLElement) => editButtonPressed && node.focus()
 
   </script>
   

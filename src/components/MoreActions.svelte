@@ -1,10 +1,12 @@
-<script>
+<script lang='ts'>
     import { createEventDispatcher } from 'svelte'
+    import type { TodoType } from '../types/todo.type'
+
     const dispatch = createEventDispatcher()
   
     let completed = true
   
-    export let todos
+    export let todos: TodoType[]
 
     const checkAll = () => {
       dispatch('checkAll', completed)
@@ -13,7 +15,8 @@
   
     const removeCompleted = () => dispatch('removeCompleted')
   
-    $: completedTodos = todos.filter(t => t.completed).length
+    // note that the t: TodoType has to be in own brackets
+    $: completedTodos = todos.filter((t: TodoType) => t.completed).length
 
   </script>
   

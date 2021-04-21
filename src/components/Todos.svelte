@@ -1,18 +1,21 @@
-<script>
+<script lang="ts">
   import FilterButton from './FilterButton.svelte'
   import Todo from './Todo.svelte'
   import MoreActions from './MoreActions.svelte'
   import NewTodo from './NewTodo.svelte'
   import TodosStatus from './TodosStatus.svelte'
-  import { alert } from '../stores.js'
+  import { alert } from '../stores'
+  import type { TodoType } from '../types/todo.type'
+  import { Filter } from '../types/filter.enum'
 
-    export let todos = []
+    export let todos: TodoType[] = []
     let newTodoName = ''
-  
+   
 //    $: totalTodos = todos.length
 //    $: completedTodos = todos.filter(todo => todo.completed).length
-    
-    let newTodoId
+    let todosStatus: TodosStatus                   // reference to TodosStatus instance
+
+    let newTodoId: number
     $: newTodoId = todos.length ? Math.max(...todos.map(t => t.id)) + 1 : 1
 /*    $: {
       if (totalTodos === 0) {
@@ -23,14 +26,14 @@
     }
 */
 
-    function removeTodo(todo) {
+    function removeTodo(todo: TodoType) {
       todos = todos.filter(t => t.id !== todo.id)
       todosStatus.focus()             // give focus to status heading
       $alert = `Todo '${todo.name}' has been deleted`
     }
 
 
-    function addTodo(name) {
+    function addTodo(name: string) {
       // doing this can cause problems as the array is mutated
       //todos.push({ id: newTodoId, name: newTodoName, completed: false })
       //todos = todos
@@ -41,22 +44,22 @@
       newTodoName = ''
     }
 
-    function updateTodo(todo) {
+    function updateTodo(todo: TodoType) {
       const i = todos.findIndex(t => t.id === todo.id)
       if (todos[i].name !== todo.name)            $alert = `todo '${todos[i].name}' has been renamed to '${todo.name}'`
       if (todos[i].completed !== todo.completed)  $alert = `todo '${todos[i].name}' marked as ${todo.completed ? 'completed' : 'active'}`
       todos[i] = { ...todos[i], ...todo }
     }
 
-    let filter = 'all'
-      const filterTodos = (filter, todos) =>
-        filter === 'active' ? todos.filter(t => !t.completed) :
-        filter === 'completed' ? todos.filter(t => t.completed) :
+    let filter: Filter = Filter.ALL
+      const filterTodos = (filter: Filter, todos: TodoType[]) =>
+        filter === Filter.ACTIVE ? todos.filter((t: TodoType) => !t.completed) :
+        filter === Filter.COMPLETED ? todos.filter((t: TodoType) => t.completed) :
         todos
         $: {
-          if (filter === 'all')               $alert = 'Browsing all todos'
-          else if (filter === 'active')       $alert = 'Browsing active todos'
-          else if (filter === 'completed')    $alert = 'Browsing completed todos'
+          if (filter === Filter.ALL)               $alert = 'Browsing all todos'
+          else if (filter === Filter.ACTIVE)       $alert = 'Browsing active todos'
+          else if (filter === Filter.COMPLETED)    $alert = 'Browsing completed todos'
         }
 
     // my functions
@@ -74,7 +77,7 @@
     }
     */
 
-    const checkAllTodos = (completed) => {
+    const checkAllTodos = (completed: boolean) => {
       todos.forEach(t => t.completed = completed)
       todos = [...todos]
       $alert = `${completed ? 'Checked' : 'Unchecked'} ${todos.length} todos`
@@ -85,7 +88,6 @@
       todos = todos.filter(t => !t.completed)
     }
 
-    let todosStatus                   // reference to TodosStatus instance
 
   //  $: console.log('newTodoName: ', newTodoName)
 </script>

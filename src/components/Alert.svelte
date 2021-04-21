@@ -1,14 +1,14 @@
-<script>
+<script lang="ts">
     import { onDestroy } from 'svelte'
-    import { alert } from '../stores.js'
+    import { alert } from '../stores'
     import { fly } from 'svelte/transition'
 
 
     export let ms = 3000
-    let visible
-    let timeout
+    let visible: boolean
+    let timeout: number
   
-    const onMessageChange = (message, ms) => {
+    const onMessageChange = (message: string, ms: number) => {
       clearTimeout(timeout)
       if (!message) {               // hide Alert if message is empty
         visible = false
