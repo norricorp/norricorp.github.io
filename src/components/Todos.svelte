@@ -29,7 +29,7 @@
     function removeTodo(todo: TodoType) {
       todos = todos.filter(t => t.id !== todo.id)
       todosStatus.focus()             // give focus to status heading
-      $alert = `Todo '${todo.name}' has been deleted`
+      $alert = `Todo '${todo.title}' has been deleted`
     }
 
 
@@ -38,7 +38,7 @@
       //todos.push({ id: newTodoId, name: newTodoName, completed: false })
       //todos = todos
       // doing this creates a new array
-      todos = [...todos, { id: newTodoId, name: name, completed: false }]
+      todos = [...todos, { id: newTodoId, title: name, completed: false }]
       $alert = `Todo '${name}' has been added`
       // finally reset variable
       newTodoName = ''
@@ -46,8 +46,8 @@
 
     function updateTodo(todo: TodoType) {
       const i = todos.findIndex(t => t.id === todo.id)
-      if (todos[i].name !== todo.name)            $alert = `todo '${todos[i].name}' has been renamed to '${todo.name}'`
-      if (todos[i].completed !== todo.completed)  $alert = `todo '${todos[i].name}' marked as ${todo.completed ? 'completed' : 'active'}`
+      if (todos[i].title !== todo.title)            $alert = `todo '${todos[i].title}' has been renamed to '${todo.title}'`
+      if (todos[i].completed !== todo.completed)  $alert = `todo '${todos[i].title}' marked as ${todo.completed ? 'completed' : 'active'}`
       todos[i] = { ...todos[i], ...todo }
     }
 
