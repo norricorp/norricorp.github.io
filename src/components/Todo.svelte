@@ -9,7 +9,7 @@
     export let todo: TodoType
 
     let editing = false                     // track editing mode
-    let name = todo.name                    // hold the name of the todo being edited
+    let name = todo.title                    // hold the name of the todo being edited
     let editButtonPressed = false           // track if edit button has been pressed, to give focus to it after cancel or save
 
 //    let nameEl                              // reference to the name input DOM node
@@ -20,12 +20,12 @@
     }
 
     function onCancel() {
-        name = todo.name                      // restores name to its initial value and
+        name = todo.title                      // restores name to its initial value and
         editing = false                       // and exit editing mode
     }
 
     function onSave() {
-        update({ name: name })                // updates todo name
+        update({ title: name })                // updates todo name
         editing = false                       // and exit editing mode
     }
 
@@ -53,15 +53,15 @@
       <!-- markup for editing todo: label, input text, Cancel and Save Button -->
       <form on:submit|preventDefault={onSave} class="stack-small" on:keydown={e => e.key === 'Escape' && onCancel()}>
         <div class="form-group">
-          <label for="todo-{todo.id}" class="todo-label">New name for '{todo.name}'</label>
+          <label for="todo-{todo.id}" class="todo-label">New name for '{todo.title}'</label>
           <input bind:value={name} use:selectOnFocus use:focusOnInit type="text" id="todo-{todo.id}" autoComplete="off" class="todo-text" />
         </div>
         <div class="btn-group">
           <button class="btn todo-cancel" on:click={onCancel} type="button">
-            Cancel<span class="visually-hidden">renaming {todo.name}</span>
+            Cancel<span class="visually-hidden">renaming {todo.title}</span>
             </button>
           <button class="btn btn__primary todo-edit" type="submit" disabled={!name}>
-            Save<span class="visually-hidden">new name for {todo.name}</span>
+            Save<span class="visually-hidden">new name for {todo.title}</span>
           </button>
         </div>
       </form>
@@ -70,14 +70,14 @@
       <div class="c-cb">
         <input type="checkbox" id="todo-{todo.id}"
           on:click={onToggle} checked={todo.completed} >
-        <label for="todo-{todo.id}" class="todo-label">{todo.name}</label>
+        <label for="todo-{todo.id}" class="todo-label">{todo.title}</label>
       </div>
       <div class="btn-group">
         <button type="button" class="btn" on:click={onEdit} use:focusEditButton>
-          Edit<span class="visually-hidden"> {todo.name}</span>
+          Edit<span class="visually-hidden"> {todo.title}</span>
         </button>
         <button type="button" class="btn btn__danger" on:click={onRemove}>
-          Delete<span class="visually-hidden"> {todo.name}</span>
+          Delete<span class="visually-hidden"> {todo.title}</span>
         </button>
       </div>
     {/if}
