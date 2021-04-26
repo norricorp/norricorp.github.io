@@ -16,7 +16,7 @@
     const removeCompleted = () => dispatch('removeCompleted')
   
     // note that the t: TodoType has to be in own brackets
-    $: completedTodos = todos.filter((t: TodoType) => t.completed).length
+    $: completedTodos = todos.filter((t: TodoType) => t.isComplete).length
 
   </script>
   

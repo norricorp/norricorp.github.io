@@ -4,7 +4,7 @@
     export let todos: TodoType[]
   
     $: totalTodos = todos.length
-    $: completedTodos = todos.filter(todo => todo.completed).length
+    $: completedTodos = todos.filter(todo => todo.isComplete).length
 
     let headingEl: HTMLElement
 

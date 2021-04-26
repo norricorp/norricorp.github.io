@@ -35,10 +35,10 @@
 
     function addTodo(name: string) {
       // doing this can cause problems as the array is mutated
-      //todos.push({ id: newTodoId, name: newTodoName, completed: false })
+      //todos.push({ id: newTodoId, name: newTodoName, isComplete: false })
       //todos = todos
       // doing this creates a new array
-      todos = [...todos, { id: newTodoId, title: name, completed: false }]
+      todos = [...todos, { id: newTodoId, title: name, isComplete: false }]
       $alert = `Todo '${name}' has been added`
       // finally reset variable
       newTodoName = ''
@@ -47,14 +47,14 @@
     function updateTodo(todo: TodoType) {
       const i = todos.findIndex(t => t.id === todo.id)
       if (todos[i].title !== todo.title)            $alert = `todo '${todos[i].title}' has been renamed to '${todo.title}'`
-      if (todos[i].completed !== todo.completed)  $alert = `todo '${todos[i].title}' marked as ${todo.completed ? 'completed' : 'active'}`
+      if (todos[i].isComplete !== todo.isComplete)  $alert = `todo '${todos[i].title}' marked as ${todo.isComplete ? 'completed' : 'active'}`
       todos[i] = { ...todos[i], ...todo }
     }
 
     let filter: Filter = Filter.ALL
       const filterTodos = (filter: Filter, todos: TodoType[]) =>
-        filter === Filter.ACTIVE ? todos.filter((t: TodoType) => !t.completed) :
-        filter === Filter.COMPLETED ? todos.filter((t: TodoType) => t.completed) :
+        filter === Filter.ACTIVE ? todos.filter((t: TodoType) => !t.isComplete) :
+        filter === Filter.COMPLETED ? todos.filter((t: TodoType) => t.isComplete) :
         todos
         $: {
           if (filter === Filter.ALL)               $alert = 'Browsing all todos'
@@ -65,27 +65,27 @@
     // my functions
     /*
     function removeCompletedTodos() {
-      todos = todos.filter(t => t.completed == false)
+      todos = todos.filter(t => t.isComplete == false)
     }
 
     function checkAll() {
       todos.forEach(function(item, index) {
-        item.completed = true
-//        console.log(item.name, item.completed, index)
+        item.isComplete = true
+//        console.log(item.name, item.isComplete, index)
       })
       todos = [...todos]
     }
     */
 
     const checkAllTodos = (completed: boolean) => {
-      todos.forEach(t => t.completed = completed)
+      todos.forEach(t => t.isComplete = completed)
       todos = [...todos]
       $alert = `${completed ? 'Checked' : 'Unchecked'} ${todos.length} todos`
     }
 
     const removeCompletedTodos = () => {
-      $alert = `Removed ${todos.filter(t => t.completed).length} todos`
-      todos = todos.filter(t => !t.completed)
+      $alert = `Removed ${todos.filter(t => t.isComplete).length} todos`
+      todos = todos.filter(t => !t.isComplete)
     }
 
 

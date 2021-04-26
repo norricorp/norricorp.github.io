@@ -41,7 +41,7 @@
     }
 
     function onToggle() {
-        update({ completed: !todo.completed}) // updates todo status
+        update({ isComplete: !todo.isComplete}) // updates todo status
     }
 
     const focusEditButton = (node: HTMLElement) => editButtonPressed && node.focus()
@@ -69,7 +69,7 @@
       <!-- markup for displaying todo: checkbox, label, Edit and Delete Button -->
       <div class="c-cb">
         <input type="checkbox" id="todo-{todo.id}"
-          on:click={onToggle} checked={todo.completed} >
+          on:click={onToggle} checked={todo.isComplete} >
         <label for="todo-{todo.id}" class="todo-label">{todo.title}</label>
       </div>
       <div class="btn-group">
