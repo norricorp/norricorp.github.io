@@ -103,3 +103,9 @@ Then, from within your project folder:
 npm run build
 surge public my-project.surge.sh
 ```
+
+To add this to Github pages then see 
+https://blog.stranianelli.com/svelte-et-github-english/
+https://www.devsamples.com/javascript/svelte/deploy-svelte-app-gh-pages
+
+
