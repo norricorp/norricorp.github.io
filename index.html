@@ -1,65 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Svelte Kit Example</title>
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width,initial-scale=1'>
 
-		
+	<title>Svelte To-Do List</title>
 
-		<link rel="modulepreload" href="/./_app/start-ddc584fa.js">
-		<link rel="modulepreload" href="/./_app/chunks/vendor-111805ed.js">
-		<link rel="modulepreload" href="/./_app/pages/__layout.svelte-246cc34e.js">
-		<link rel="modulepreload" href="/./_app/pages/index.svelte-fdf5a78d.js">
-		<link rel="stylesheet" href="/./_app/assets/start-a8cd1609.css">
-		<link rel="stylesheet" href="/./_app/assets/pages/__layout.svelte-8ddef586.css">
+	<link rel='icon' type='image/png' href='./favicon.png'>
+	<link rel='stylesheet' href='./global.css'>
+	<link rel='stylesheet' href='./build/bundle.css'>
 
-		<script type="module">
-			import { start } from "/./_app/start-ddc584fa.js";
-			start({
-				target: document.querySelector("#svelte"),
-				paths: {"base":"","assets":"/."},
-				session: {},
-				host: location.host,
-				route: true,
-				spa: false,
-				trailing_slash: "never",
-				hydrate: {
-					status: 200,
-					error: null,
-					nodes: [
-						import("/./_app/pages/__layout.svelte-246cc34e.js"),
-						import("/./_app/pages/index.svelte-fdf5a78d.js")
-					],
-					page: {
-						host: location.host, // TODO this is redundant
-						path: "/",
-						query: new URLSearchParams(""),
-						params: {}
-					}
-				}
-			});
-		</script>
-	</head>
-	<body>
-		<div id="svelte">
+	<script defer src='./build/bundle.js'></script>
+</head>
 
-
-
-
-<nav class="svelte-1lx4mxp"><a href="." class="svelte-1lx4mxp">Home</a>
-	<a href="about" class="svelte-1lx4mxp">About</a>
-	<a href="settings" class="svelte-1lx4mxp">Settings</a></nav>
-
-<br style="line-height:3;">
-
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-
-
-
-	
-</div>
-	</body>
+<body>
+</body>
 </html>
